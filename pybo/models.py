@@ -27,4 +27,29 @@ class Comment(models.Model):
     modify_date = models.DateTimeField(null=True, blank=True)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Graduation(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    result = models.IntegerField(default=0)
+    least = 130
+    ecpt = models.IntegerField(default=0)
+    major = models.IntegerField(default=0)
+    ppe = models.IntegerField(default=0)
+    hus = models.IntegerField(default=0)
+    other_humanity = models.IntegerField(default=0)
+    core_eng1 = models.IntegerField(default=0)
+    core_eng2 = models.IntegerField(default=0)
+    core_writing = models.IntegerField(default=0)
+    core_math1 = models.IntegerField(default=0)
+    core_math2 = models.IntegerField(default=0)
+    core_science = models.IntegerField(default=0)
+    core_exp = models.IntegerField(default=0)
+    music = models.IntegerField(default=0)
+    exercise = models.IntegerField(default=0)
+
+class UploadFileModel(models.Model):
+    title = models.TextField(default='')
+    file = models.FileField(null=True)
+
 # ---------------------------------------------------------------------------- #

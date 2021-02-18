@@ -1,5 +1,5 @@
 from django import forms
-from .models import Question, Answer, Comment
+from .models import Question, Answer, Comment, Graduation, UploadFileModel
 
 
 class QuestionForm(forms.ModelForm):
@@ -26,3 +26,12 @@ class CommentForm(forms.ModelForm):
         labels = {
             'content': '댓글내용',
         }
+
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = UploadFileModel
+        fields = ('title', 'file')
+
+    def __init__(self, *args, **kwargs):
+        super(UploadFileForm, self).__init__(*args, **kwargs)
+        self.fields['file'].required = False
