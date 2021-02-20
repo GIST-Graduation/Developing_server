@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from ..forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -7,6 +8,8 @@ import logging
 import sys
 sys.path.append('C:/projects/mysite/static/graduation_code_review/graduation_code_review_final.py')
 logger = logging.getLogger('pybo')
+
+from ..models import Graduation
 
 import sys, io
 import os
@@ -208,6 +211,7 @@ def print_course(course):
 
 # 0학점 과목 분류 (콜로퀴움, 예체능)
 def print_courses_by_class(mclass, length=70):
+    credit_sum = 0
     # 처음에 과목 분류를 출력 ex) Core English1
     print(colored('\n' + courses_name[mclass].center(length) + '\n',
                   attrs=['bold']))
@@ -218,6 +222,7 @@ def print_courses_by_class(mclass, length=70):
     # 내가 들은 과목들을 출력 ex) GS1601 2 영어 1: 신입생 영어
     for course in my_classified_courses[mclass]:
         print_course(course)
+        credit_sum += int(course[1])
 
     print('-' * 75)
 
@@ -235,6 +240,7 @@ def print_courses_by_class(mclass, length=70):
                                       courses_text[mclass]))
 
     print('-' * 75 + '\n')
+    return credit_sum
 
 
 # 유학점 분류
@@ -522,6 +528,7 @@ my_classified_courses_credit = {
 
 def upload_file(request):
     if request.method == 'POST' and request.FILES['document']:
+        student = get_object_or_404(Graduation)
         loaded_file = request.FILES['document']
         print(loaded_file.name)
         print(loaded_file.size)
