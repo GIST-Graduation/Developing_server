@@ -1,6 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if upload_complete %}
+        <table border=1>
+           <thead>
+              <tr>
+                 <th style="width: 200px; border: 1px solid #000000;">분류</th>
+                 <th style="width: 200px; border: 1px solid #000000;">카테고리</th>
+                 <th style="width: 200px; border: 1px solid #000000;">필요학점</th>
+                 <th style="width: 200px; border: 1px solid #000000;">수강학점</th>
+                 <th style="width: 200px; border: 1px solid #000000;">비고</th>
+              </tr>
+           </thead>
+        </table>
+        {% for course,j in course_list.items %}
+        <table border=1>
+            <tbody><!-- 기본 한 개 -->
+                  <td style="width: 200px; border: 1px solid #000000; " rowspan={{ j|length|add:"2" }}>{{ course }}</td>
+                  {% for k in j %}
+                      <tr>
+                      {% for w in k %}
+                      <td style="width: 200px; border: 1px solid #000000;">{{ w }}</td>
+                      {% endfor %}
+                      </tr>
+                  {% endfor %}
+
+        {% endfor %}
+              <!-- 나머지 -->
+            </tbody>
+        </table>
+    {% else %}
         <form method="post" enctype="multipart/form-data">
             <div class="file-droppable">
                 <div>Drag-n-drop some file here</div>
@@ -10,6 +39,7 @@
             </div>
         <button type="submit">Upload</button>
         </form>
+    {% endif %}
 {% endblock %}
 {% block script %}
     <script>

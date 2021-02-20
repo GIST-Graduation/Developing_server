@@ -528,7 +528,6 @@ my_classified_courses_credit = {
 
 def upload_file(request):
     if request.method == 'POST' and request.FILES['document']:
-        student = get_object_or_404(Graduation)
         loaded_file = request.FILES['document']
         print(loaded_file.name)
         print(loaded_file.size)
@@ -555,6 +554,8 @@ def upload_file(request):
                       attrs=['bold']))
         for subclass in ["core_english1", "core_english2", "core_writing"]:
             print_courses_by_subclass(subclass)
+
+        course_length = []
 
         print(colored("\n" + "인문사회".center(70) + "\n",
                       attrs=['bold']))
@@ -598,4 +599,6 @@ def upload_file(request):
         file = 'C:/projects/mysite/media/Completed course grade.xlsx'
         if os.path.isfile(file):
             os.remove(file)
+        context = {'upload_complete': 1, 'course_list': my_classified_courses}
+        return render(request, 'pybo/upload.html', context)
     return render(request, 'pybo/upload.html')
