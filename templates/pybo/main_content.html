@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static "header.css" %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="{% static "main_content.js" %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          document.querySelectorAll('.file-droppable').forEach(function(droppable) {
+            var originalText = droppable.querySelector('div').innerHTML;
+            var input = droppable.querySelector('input');
+            var fileChanged = function() {
+              var files = input.files;
+              if (files.length) {
+                droppable.querySelector('span').style.display = 'block';
+                droppable.querySelector('div').innerHTML = '';
+                        for (var i = 0; i < files.length; i++) {
+                            droppable.querySelector('div').innerHTML += files[i].name + '<br>';
+                }
+                droppable.classList.add('filled');
+              } else {
+                droppable.querySelector('div').innerHTML = originalText;
+                droppable.classList.remove('filled');
+                droppable.querySelector('span').style.display = 'none';
+              }
+            };
+            input.addEventListener('change', fileChanged);
+            fileChanged(input);
+            droppable.querySelector('span').addEventListener('click', function() {
+                  input.value = '';
+                fileChanged(input);
+            });
+          });
+        });
+    </script>
+	<title>GIST GRADUATION</title>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<div id="top-bar">
+				<a href="{% url 'pybo:upload_start' %}">
+					<div id="circles-container" class="flex-item">
+						<div id="red" class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>
+					</div>
+				</a>
+				<div id="nav">
+					<div id="nav1" class="nav"><a href="main_content.html">Guide</a></div>
+					<div id="nav3" class="nav">Feedback</div>
+					<div id="nav4" class="nav"><a href="developer.html">Developers</a></div>
+				</div>
+			</div>
+		</div>
+		<div id="container">
+			<div id="using_instruction">
+				<div class="content_nav active" id="content1_title">1</div>
+				<div class="content_nav" id="content2_title">2</div>
+				<div class="content_nav" id="content3_title">3</div>
+				<div class="content_nav" id="content4_title">Start!</div>
+			</div>
+			<div id="content">
+				<div id="content_cover">
+					<div id="service_explain" class="content">
+						1111</div>
+					<div id="how_to_use" class="content hide">2222</div>
+					<div id="precautions" class="content hide">3333</div>
+					<div id="start" class="content hide">
+                        <form method="post" enctype="multipart/form-data">
+            <div class="file-droppable">
+                <div>Drag-n-drop some file here</div>
+                <span>&times;</span>
+                {% csrf_token %}
+                <input type="file" name="document" id="file_enter">
+            </div>
+        <button type="submit">Upload</button>
+        </form></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from ..forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
@@ -650,6 +650,9 @@ def upload_file(request):
                     pass
         total = sum_credits()
         context = {'upload_complete': 1, 'course_list': my_classified_courses, 'total': total, 'unclassfied_credit': my_classified_courses_credit["nonclassified_courses"]}
-        return render(request, 'pybo/upload.html', context)
-    return render(request, 'pybo/upload.html')
+        return render(request, 'pybo/result.html', context)
+    return render(request, 'pybo/main_content.html')
+
+def upload_start(request):
+    return render(request, 'pybo/start.html')
 

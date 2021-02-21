@@ -47,6 +47,7 @@ urlpatterns = [
     path('vote/question/<int:question_id>/', vote_views.vote_question, name='vote_question'),
     path('vote/answer/<int:answer_id>/', vote_views.vote_answer, name='vote_answer'),
 
-    path('upload/', Upload_views.upload_file, name='upload_file')
+    path('upload/', Upload_views.upload_file, name='upload_file'),
+    path('start/', Upload_views.upload_start, name='upload_start'),
 ]
 # ---------------------------------------------------------------------------- #

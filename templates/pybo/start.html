@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static "start.css" %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="{% static "start.js" %}"></script>
+	<title>GIST GRADUATION</title>
+</head>
+
+<body>
+	<div class="cover">
+		<hr class="line">
+		</hr>
+		<div id="middle">
+			<div id="cover_circles_container" class="flex-item">
+				<div id="red" class="circle_cover"></div>
+				<div class="circle_cover"></div>
+				<div class="circle_cover"></div>
+				<div class="circle_cover"></div>
+			</div>
+			<div id="text">졸업요건</div>
+		</div>
+		<hr class="line">
+		</hr>
+	</div>
+	<a class="ready displayNone" href="{% url 'pybo:upload_file' %}">
+		<div id="wrapper">
+			<div id="container">
+				<div id="flex-container">
+					<div id="title" class="flex-item">
+						GIST 졸업을 향한 여러분의 여정.
+					</div>
+					<div id="btn_start" class="flex-item">
+						<div class="zoomInOut">
+							Click to START!
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</a>
+</body>
+
+</html>

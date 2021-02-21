@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.line {
+  border: 1.2px solid black;
+  background-color: black;
+  width: 42.45%;
+  margin: 0;
+  margin-top: 20px;
+}
+
+#middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+}
+
+#cover_circles_container {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.circle_cover {
+  background-color: #5a625e;
+  width: 12px;
+  height: 12px;
+  border-radius: 75px;
+  margin: 0 17px;
+}
+
+#text {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.ready {
+  position: absolute;
+  margin: 0 auto;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.displayNone {
+  display: none;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#circles-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.circle {
+  background-color: #5a625e;
+  width: 30px;
+  height: 30px;
+  border-radius: 75px;
+  margin: 7px;
+}
+
+#red {
+  background-color: #df3127;
+}
+
+#title {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: black;
+  color: white;
+  font-size: 2rem;
+  padding: 0px 10px;
+  margin: 50px;
+}
+
+#btn_start {
+  font-size: 1.75rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+#btn_start .zoomInOut {
+  animation-name: zoomInOut;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.08);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

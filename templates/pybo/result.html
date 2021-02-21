@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./css/main.css">
+	<link rel="stylesheet" href="{% static "result.css" %}">
+	<link rel="stylesheet" href="./css/header.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<title>지졸!</title>
+</head>
+
+<body>
+    {% if upload_complete %}
+        <table border=1>
+           <thead>
+              <tr>
+                 <th style="width: 200px; border: 1px solid #000000;">분류</th>
+                 <th style="width: 200px; border: 1px solid #000000;">과목코드</th>
+                 <th style="width: 200px; border: 1px solid #000000;">수강한 학점</th>
+                 <th style="width: 200px; border: 1px solid #000000;">과목명</th>
+                 <th style="width: 200px; border: 1px solid #000000;">이수 현황</th>
+              </tr>
+           </thead>
+        </table>
+        {% for course,key in course_list.items %}
+        <table border=1>
+            <tbody><!-- 기본 한 개 -->
+                  <td style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ course }}</td>
+            {% for value in key %}
+                        <tr>
+                              {% for w in value %}
+                                  {% if '/' in w %}
+                                     <td style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ w }}</td>
+                                  {% else %}
+                                    <td style="width: 200px; border: 1px solid #000000;">{{ w }}</td>
+                                  {% endif %}
+                              {% endfor %}
+                        </tr>
+            {% endfor %}
+        {% endfor %}
+              <!-- 나머지 -->
+            </tbody>
+        </table>
+        총 수강학점은 {{ total }}/130 입니다. 비 분류 학점은 {{ unclassfied_credit }}점이 추가로 있습니다.
+    {% else %}
+        결과가 존재하지 않습니다 다시 시도해주세요.
+        <a href="#">다시 돌아가기</a>
+    {% endif %}
+	<div id="wrapper">
+		<div id="header">
+			<div id="top-bar">
+				<a href="start.html">
+					<div id="circles-container" class="flex-item">
+						<div id="red" class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>
+						<div class="circle"></div>
+					</div>
+				</a>
+				<div id="nav">
+					<div id="nav1" class="nav"><a href="main_content.html">사용 안내</a></div>
+					<div id="nav3" class="nav">피드백 게시판</div>
+					<div id="nav4" class="nav"><a href="developer.html">개발자</a></div>
+				</div>
+			</div>
+		</div>
+		<div id="container">
+			<div id="table_cover">
+				<table class="table">
+					<tr>
+						<th rowspan=3>기초과학</th>
+						<td class="row1">영어1</td>
+						<td>신입생 영어</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">영어2</td>
+						<td>영어2</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">글쓰기</td>
+						<td>학술적 글쓰기</td>
+						<td>3/3</td>
+						<td>o</td>
+					</tr>
+				</table>
+				<table class="table">
+					<tr>
+						<th rowspan=3>기초과학</th>
+						<td class="row1">영어1</td>
+						<td>신입생 영어</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">영어2</td>
+						<td>영어2</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">글쓰기</td>
+						<td>학술적 글쓰기</td>
+						<td>3/3</td>
+						<td>o</td>
+					</tr>
+				</table>
+				<table class="table">
+					<tr>
+						<th rowspan=3>기초과학</th>
+						<td class="row1">영어1</td>
+						<td>신입생 영어</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">영어2</td>
+						<td>영어2</td>
+						<td>2/2</td>
+						<td>o</td>
+					</tr>
+					<tr>
+						<td class="row1">글쓰기</td>
+						<td>학술적 글쓰기</td>
+						<td>3/3</td>
+						<td>o</td>
+					</tr>
+				</table>
+			</div>
+			<div class="btn_feedback"><a href="#" class="btn_feedback">피드백 게시판 가기</a></div>
+		</div>
+	</div>
+</body>
+
+</html>
