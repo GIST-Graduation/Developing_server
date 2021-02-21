@@ -6,6 +6,9 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import logging
 import sys
+
+
+
 sys.path.append('C:/projects/mysite/static/graduation_code_review/graduation_code_review_final.py')
 logger = logging.getLogger('pybo')
 
@@ -22,11 +25,10 @@ from termcolor import colored
 
 os.getcwd()
 
-
-# In[19]:
-
+all_val = '0'
 
 # 수강한 과목을 확인하는 함수
+
 def get_my_courses(ws):
     print("Getting your courses...", flush=True)
 
@@ -320,6 +322,7 @@ def print_major_courses():
     print('-' * 75 + '\n')
 
 
+
 # 강의 딕셔너리
 """
 classified_course = [core_english1, core_english2, core_writing,
@@ -419,7 +422,16 @@ classified_courses = {
               'GS0211', 'GS0212'],
     'colloquium': ['GS9331', 'UC9331']
 }
-
+"""
+  ["core_english1", "core_english2", "core_writing",
+         "HUS", "PPE", "other_humanity", "software",
+         "core_math1", "core_math2", "core_science", "core_experiment",
+         "freshman_seminar",
+         "major_core", "major_elective",
+         "research",
+         "others1_core", "others1_optional", "others2", "others3",
+         "music", "exercise", "colloquium", "nonclassified_courses"
+"""
 # 졸업을 위해 들어야하는 학점을 넣는 딕셔너리
 classified_courses_credit = {
     "core_english1": 2, "core_english2": 2, "core_writing": 3,
@@ -481,16 +493,15 @@ major = [["physics_core", "physics_elective"],
          ["material_core", "material_elective"],
          ["environment_core", "environment_elective"]]
 
-"""
-my_classified_course = [core_english1, core_english2, core_writing,
-        HUS, PPE, other_humanity,
-        core_math1, core_math2, core_science, core_experiment,
-        freshman_seminar,
-        major_core, major_elective,
-        research,
-        others1, other2, others3,
-        music, exercise, colloquium, nonclassified_courses]
-"""
+
+my_classified_course = ["core_english1", "core_english2", "core_writing",
+         "HUS", "PPE", "other_humanity", "software",
+         "core_math1", "core_math2", "core_science", "core_experiment",
+         "freshman_seminar",
+         "research",
+         "others1_core", "others1_optional", "others2", "others3",
+         "music", "exercise", "colloquium", "nonclassified_courses"]
+
 """
 0: physics, 1: chemical, 2: biology, 3: eecs,
 4: mechanics, 5: materials, 6: environment
@@ -510,8 +521,29 @@ my_classified_courses = {category: [] for category in [
     "others1_core", "others1_optional", "others2", "others3",
     "music", "exercise", "colloquium", "nonclassified_courses"]}
 
+my_classified_courses_sub = {category: [] for category in [
+    "core_english1", "core_english2", "core_writing",
+    "HUS", "PPE", "other_humanity", "software",
+    "core_math1", "core_math2", "core_science", "core_experiment",
+    "freshman_seminar",
+    "major_core", "major_elective",
+    "research",
+    "others1_core", "others1_optional", "others2", "others3",
+    "music", "exercise", "colloquium", "nonclassified_courses"]}
+
 # 내가 들은 학점들을 담는 딕셔너리
 my_classified_courses_credit = {
+    **dict.fromkeys(
+        ["core_english1", "core_english2", "core_writing",
+         "HUS", "PPE", "other_humanity", "software",
+         "core_math1", "core_math2", "core_science", "core_experiment",
+         "freshman_seminar",
+         "major_core", "major_elective",
+         "research",
+         "others1_core", "others1_optional", "others2", "others3",
+         "music", "exercise", "colloquium", "nonclassified_courses"], 0)}
+
+my_classified_courses_credit_sub = {
     **dict.fromkeys(
         ["core_english1", "core_english2", "core_writing",
          "HUS", "PPE", "other_humanity", "software",
@@ -599,6 +631,25 @@ def upload_file(request):
         file = 'C:/projects/mysite/media/Completed course grade.xlsx'
         if os.path.isfile(file):
             os.remove(file)
-        context = {'upload_complete': 1, 'course_list': my_classified_courses}
+        major_credit = 0
+        for name in my_classified_course:
+            if name == "major_core" or name == "major_elective":
+                if name == "major_core":
+                    major_credit += int(my_classified_courses_credit[name])
+                else:
+                    major_credit += int(my_classified_courses_credit[name])
+
+            else:
+                rate = str(my_classified_courses_credit[name])+"/"+str(classified_courses_credit[name])
+                print(rate)
+                try:
+                    lst = list(my_classified_courses[name][0])
+                    lst.append(rate)
+                    my_classified_courses[name][0] = tuple(lst)
+                except:
+                    pass
+        total = sum_credits()
+        context = {'upload_complete': 1, 'course_list': my_classified_courses, 'total': total, 'unclassfied_credit': my_classified_courses_credit["nonclassified_courses"]}
         return render(request, 'pybo/upload.html', context)
     return render(request, 'pybo/upload.html')
+

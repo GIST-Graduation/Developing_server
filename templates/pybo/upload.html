@@ -13,22 +13,26 @@
               </tr>
            </thead>
         </table>
-        {% for course,j in course_list.items %}
+        {% for course,key in course_list.items %}
         <table border=1>
             <tbody><!-- 기본 한 개 -->
-                  <td style="width: 200px; border: 1px solid #000000; " rowspan={{ j|length|add:"2" }}>{{ course }}</td>
-                  {% for k in j %}
-                      <tr>
-                      {% for w in k %}
-                      <td style="width: 200px; border: 1px solid #000000;">{{ w }}</td>
-                      {% endfor %}
-                      </tr>
-                  {% endfor %}
-
+                  <td style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ course }}</td>
+            {% for value in key %}
+                        <tr>
+                              {% for w in value %}
+                                  {% if '/' in w %}
+                                     <td style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ w }}</td>
+                                  {% else %}
+                                    <td style="width: 200px; border: 1px solid #000000;">{{ w }}</td>
+                                  {% endif %}
+                              {% endfor %}
+                        </tr>
+            {% endfor %}
         {% endfor %}
               <!-- 나머지 -->
             </tbody>
         </table>
+        총 수강학점은 {{ total }}/130 입니다. 비 분류 학점은 {{ unclassfied_credit }}점이 추가로 있습니다.
     {% else %}
         <form method="post" enctype="multipart/form-data">
             <div class="file-droppable">
