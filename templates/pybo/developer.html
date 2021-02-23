@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./css/main.css">
-	<link rel="stylesheet" href="./css/header.css">
+	<link rel="stylesheet" href="{% static "main.css" %}">
+	<link rel="stylesheet" href="{% static "header.css" %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="./js/developer.js"></script>
+	<script src="{% static "developer.js" %}"></script>
 	<title>지졸!</title>
 </head>
 
@@ -15,7 +16,7 @@
 	<div id="wrapper">
 		<div id="header">
 			<div id="top-bar">
-				<a href="start.html">
+				<a href="{% url 'pybo:upload_start' %}">
 					<div id="circles-container" class="flex-item">
 						<div id="red" class="circle"></div>
 						<div class="circle"></div>
@@ -24,9 +25,9 @@
 					</div>
 				</a>
 				<div id="nav">
-					<div id="nav1" class="nav"><a href="main_content.html">Guide</a></div>
+					<div id="nav1" class="nav"><a href="{% url 'pybo:upload_file' %}">Guide</a></div>
 					<div id="nav3" class="nav">Feedback</div>
-					<div id="nav4" class="nav"><a href="developer.html">Developers</a></div>
+					<div id="nav4" class="nav"><a href="#">Developers</a></div>
 				</div>
 			</div>
 		</div>
@@ -41,7 +42,7 @@
 				<div id="introduction_cover">
 					<div id="Fe" class="content">
 						<div class="introduction_top">
-							<img src="./pictures/yeji.jpg" alt="">
+							<img src="{% static "yeji.jpg" %}" alt="">
 							<div class="summary">
 								루삥뽕뽕삥빵삥뿡
 							</div>
@@ -50,21 +51,21 @@
 					</div>
 					<div id="rejaealsun" class="content hide">
 						<div class="introduction_top">
-							<img src="./pictures/yeji.jpg" alt="">
+							<img src="{% static "yeji.jpg" %}" alt="">
 							<div class="summary">나이 이름 기여 부분</div>
 						</div>
 						<div class="introduction_bottom">글로 설명</div>
 					</div>
 					<div id="silver_plate" class="content hide">
 						<div class="introduction_top">
-							<img src="./pictures/yeji.jpg" alt="">
+							<img src="{% static "yeji.jpg" %}" alt="">
 							<div class="summary">나이 이름 기여 부분</div>
 						</div>
 						<div class="introduction_bottom">글로 설명</div>
 					</div>
 					<div id="strix" class="content hide">
 						<div class="introduction_top">
-							<img src="./pictures/yeji.jpg" alt="">
+							<img src="{% static "yeji.jpg" %}" alt="">
 							<div class="summary">나이 이름 기여 부분</div>
 						</div>
 						<div class="introduction_bottom">글로 설명</div>

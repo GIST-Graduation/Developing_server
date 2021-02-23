@@ -49,5 +49,7 @@ urlpatterns = [
 
     path('upload/', Upload_views.upload_file, name='upload_file'),
     path('start/', Upload_views.upload_start, name='upload_start'),
+    path('developers/', Upload_views.devs, name='developers'),
+    path('result/', Upload_views.check_graduation, name='result'),
 ]
 # ---------------------------------------------------------------------------- #

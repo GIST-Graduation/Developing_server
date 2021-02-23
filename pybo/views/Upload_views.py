@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from ..forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
+from ..models import *
 from django.conf import settings
 import logging
 import sys
@@ -25,10 +27,7 @@ from termcolor import colored
 
 os.getcwd()
 
-all_val = '0'
-
 # 수강한 과목을 확인하는 함수
-
 def get_my_courses(ws):
     print("Getting your courses...", flush=True)
 
@@ -557,21 +556,11 @@ my_classified_courses_credit_sub = {
 # my_courses = list of (code, credit, title)
 # my_courses라는 변수에 내가 들은 강의를 넣는다
 
-
+@login_required(login_url='common:login')
 def upload_file(request):
-    if request.method == 'POST' and request.FILES['document']:
-        loaded_file = request.FILES['document']
-        print(loaded_file.name)
-        print(loaded_file.size)
-        print(loaded_file.file)
-        fs = FileSystemStorage()
-        fs.save(loaded_file.name, loaded_file.file, max_length=None)
-        print('-' * 70)
-        print("Enter the number corresponding with your major".center(70))
-        print("0: Physics, 1: Chemical, 2: Biology, 3: EECS,".center(70))
-        print("4: Mechanics, 5: Materials, 6: environment".center(70))
-        print('-' * 70)
-        ws = openpyxl.load_workbook('C:/projects/mysite/media/Completed course grade.xlsx').active
+    if request.method == 'POST':
+        ws = openpyxl.load_workbook(filename=request.FILES['document'].file).active
+
         my_courses = get_my_courses(ws)
         my_major = 3
 
@@ -581,7 +570,7 @@ def upload_file(request):
                 my_classified_courses_credit["nonclassified_courses"] += my_courses[my_course_index][1]
                 my_classified_courses["nonclassified_courses"].append(
                     my_courses[my_course_index])
-
+        """        
         print(colored("\n" + "언어의 기초".center(70) + "\n",
                       attrs=['bold']))
         for subclass in ["core_english1", "core_english2", "core_writing"]:
@@ -628,9 +617,7 @@ def upload_file(request):
             print_courses_by_class(mclass)
 
         print(my_classified_courses)
-        file = 'C:/projects/mysite/media/Completed course grade.xlsx'
-        if os.path.isfile(file):
-            os.remove(file)
+        """
         major_credit = 0
         for name in my_classified_course:
             if name == "major_core" or name == "major_elective":
@@ -656,3 +643,9 @@ def upload_file(request):
 def upload_start(request):
     return render(request, 'pybo/start.html')
 
+def devs(request):
+    return render(request, 'pybo/developer.html')
+
+def check_graduation(request):
+
+    return render(request, 'pybo/result.html', context)
