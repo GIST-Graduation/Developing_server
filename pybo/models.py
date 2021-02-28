@@ -48,7 +48,9 @@ class Graduation(models.Model):
         ("5", "material_core"),
         ("6", "environment_core"),
     }
-    my_major = models.CharField(max_length=20, choices=major_choice)
+    #choices=major_choice
+    my_major = models.CharField(max_length=20, null=True, blank=True)
+
     def __init__(self):
         # 내가 들은 학점들을 담는 딕셔너리
         self.my_classified_courses_credit = {
