@@ -12,10 +12,7 @@ import sys, io
 import os
 
 # 액셀, csv를 다루는 모듈 --> pip install openpyxl
-import openpyxl, csv
-
-# 파이썬 글자색 적용 모듈 --> pip install termcolor
-from termcolor import colored
+import openpyxl
 
 os.getcwd()
 
