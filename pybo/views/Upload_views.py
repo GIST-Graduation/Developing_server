@@ -1,12 +1,5 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
-from ..forms import UploadFileForm
-from django.core.files.storage import FileSystemStorage
-from ..models import *
-from django.conf import settings
 import logging
 import sys
 
@@ -14,8 +7,6 @@ import sys
 
 sys.path.append('C:/projects/mysite/static/graduation_code_review/graduation_code_review_final.py')
 logger = logging.getLogger('pybo')
-
-from ..models import Graduation
 
 import sys, io
 import os
@@ -58,7 +49,6 @@ def get_my_courses(ws):
     print("Done", flush=True)
 
     return ret
-
 def upload_file(request):
     def classify_my_course(my_course_index, my_courses):
         # my_course = (code, credit, title)
@@ -205,131 +195,6 @@ def upload_file(request):
         print('{:<7} {:<7d} {:}'.format(course[0], course[1], course[2]))
         # course = (code, credit, title) ,과목코드 학점 과목명 순ㅇ로 출력
 
-    # 0학점 과목 분류 (콜로퀴움, 예체능)
-    def print_courses_by_class(mclass, length=70):
-        credit_sum = 0
-        # 처음에 과목 분류를 출력 ex) Core English1
-        print(colored('\n' + courses_name[mclass].center(length) + '\n',
-                      attrs=['bold']))
-
-        print('-' * 75)
-        print('{:<7} {:<7} {:}'.format("course", "credit", "title"))
-
-        # 내가 들은 과목들을 출력 ex) GS1601 2 영어 1: 신입생 영어
-        for course in my_classified_courses[mclass]:
-            print_course(course)
-            credit_sum += int(course[1])
-
-        print('-' * 75)
-
-        # 필수 과목이면 Mandatory 만약 필수과목을 안들었다면 빨간색 굵은 글씨로 출력
-        if courses_text[mclass] == "Mandatory" and classified_courses_credit[mclass] > my_classified_courses_credit[
-            mclass]:
-            print(colored('{:7} {:<7} {:}'.format(" ",
-                                                  str(my_classified_courses_credit[mclass]) + '/' + \
-                                                  str(classified_courses_credit[mclass]),
-                                                  courses_text[mclass]), "red", attrs=['bold']))
-
-        else:
-            print('{:7} {:<7} {:}'.format(" ",
-                                          str(my_classified_courses_credit[mclass]) + '/' + \
-                                          str(classified_courses_credit[mclass]),
-                                          courses_text[mclass]))
-
-        print('-' * 75 + '\n')
-        return credit_sum
-
-    # 유학점 분류
-    def print_courses_by_subclass(subclass):
-        print('- ' + courses_name[subclass] + '\n' + '-' * 75)
-        print('{:<7} {:<7} {:}'.format("course", "credit", "title"))
-
-        for course in my_classified_courses[subclass]:
-            print_course(course)
-
-        print('-' * 75)
-
-        if subclass == "core_experiment":
-            output_string = '{:7} {:<7} {:}'.format(" ",
-                                                    str(my_classified_courses_credit[subclass]) + '/' + \
-                                                    str(classified_courses_credit[subclass]),
-                                                    courses_text[subclass])
-
-            if classified_courses_credit[subclass] < 2:
-                print(colored(output_string, "red", attrs=['bold']) + '\n' + '-' * 75 + '\n')
-                return
-            else:
-                print(output_string + '\n' + '-' * 75 + '\n')
-                return
-
-        output_string = '{:7} {:<7} {:}'.format(" ",
-                                                str(my_classified_courses_credit[subclass]) + '/' + \
-                                                str(classified_courses_credit[subclass]),
-                                                courses_text[subclass])
-        if courses_text[subclass] == "Mandatory" and classified_courses_credit[subclass] > my_classified_courses_credit[
-            subclass]:
-            print(colored(output_string, "red", attrs=['bold']))
-        else:
-            print(output_string)
-
-        print('-' * 75 + '\n')
-
-    # 전공 과목 출력
-    def print_major_courses():
-        print(colored('\n' + "전공학점".center(70) + '\n',
-                      attrs=['bold']))
-
-        print("- Major Core")
-        print('-' * 75)
-        print('{:<7} {:<7} {:}'.format("course", "credit", "title"))
-        for course in my_classified_courses["major_core"]:
-            print_course(course)
-
-        print('-' * 75)
-        print('{:7} {:<7}'.format(" ",
-                                  str(my_classified_courses_credit["major_core"])))
-        print('-' * 75)
-
-        print("\n- Major elective")
-        print('-' * 75)
-        print('{:<7} {:<7} {:}'.format("course", "credit", "title"))
-        for course in my_classified_courses["major_elective"]:
-            print_course(course)
-
-        print('-' * 75)
-        print('{:7} {:<7}'.format(" ",
-                                  str(my_classified_courses_credit["major_elective"])))
-        print('-' * 75)
-
-        major_credit = my_classified_courses_credit["major_elective"] + my_classified_courses_credit["major_core"]
-        output_string = '{:7} {:<7} {:}'.format(" ",
-                                                str(major_credit) + '/' + \
-                                                str(classified_courses_credit["major"]),
-                                                "Mandatory over 36")
-
-        if major_credit < 36:
-            print(colored(output_string, "red", attrs=['bold']))
-        else:
-            print(output_string)
-
-        print('-' * 75 + '\n')
-
-    # 강의 딕셔너리
-    """
-    classified_course = [core_english1, core_english2, core_writing,
-            HUS, PPE, other_humanity, software,
-            core_math1, core_math2, core_science, core_experiment,
-            freshman_seminar,
-            physics_core, physics_elective,
-            chemical_core, chemical_elective,
-            biology_core, biology_elective,
-            eecs_core, eecs_elective,
-            mechanics_core, mechanics_elective,
-            environment_core, environment_elective,
-            research,
-            others1_core, others1_optional, others3,
-            music, exercise, colloquium]
-    """
     classified_courses = {
         'core_english1': ['GS1601', 'GS1603'],
         'core_english2': ['GS2652'],
@@ -514,8 +379,29 @@ def upload_file(request):
         "others1_core", "others1_optional", "others2", "others3",
         "music", "exercise", "colloquium", "nonclassified_courses"]}
 
+    my_classified_courses_sub = {category: [] for category in [
+        "core_english1", "core_english2", "core_writing",
+        "HUS", "PPE", "other_humanity", "software",
+        "core_math1", "core_math2", "core_science", "core_experiment",
+        "freshman_seminar",
+        "major_core", "major_elective",
+        "research",
+        "others1_core", "others1_optional", "others2", "others3",
+        "music", "exercise", "colloquium", "nonclassified_courses"]}
+
     # 내가 들은 학점들을 담는 딕셔너리
     my_classified_courses_credit = {
+        **dict.fromkeys(
+            ["core_english1", "core_english2", "core_writing",
+             "HUS", "PPE", "other_humanity", "software",
+             "core_math1", "core_math2", "core_science", "core_experiment",
+             "freshman_seminar",
+             "major_core", "major_elective",
+             "research",
+             "others1_core", "others1_optional", "others2", "others3",
+             "music", "exercise", "colloquium", "nonclassified_courses"], 0)}
+
+    my_classified_courses_credit_sub = {
         **dict.fromkeys(
             ["core_english1", "core_english2", "core_writing",
              "HUS", "PPE", "other_humanity", "software",
@@ -531,9 +417,9 @@ def upload_file(request):
             ws = openpyxl.load_workbook(filename=request.FILES['document'].file).active
         except:
             messages.error(request, '올바른 형식의 파일을 업로드해주세요!')
-            return redirect("pybo:upload_start")
+            return render(request, "gist-graduation:upload_start")
 
-        my_courses = get_my_courses(ws)
+        my_courses=get_my_courses(ws)
 
         my_major = 3
         for my_course_index in range(len(my_courses)):
@@ -541,54 +427,6 @@ def upload_file(request):
             if not classify_my_course(my_course_index, my_courses):
                 my_classified_courses_credit["nonclassified_courses"] += my_courses[my_course_index][1]
                 my_classified_courses["nonclassified_courses"].append(my_courses[my_course_index])
-
-        print(colored("\n" + "언어의 기초".center(70) + "\n",
-                      attrs=['bold']))
-        for subclass in ["core_english1", "core_english2", "core_writing"]:
-            print_courses_by_subclass(subclass)
-
-        course_length = []
-
-        print(colored("\n" + "인문사회".center(70) + "\n",
-                      attrs=['bold']))
-        for subclass in ["HUS", "PPE", "other_humanity"]:
-            print_courses_by_subclass(subclass)
-
-        print_courses_by_class("software")
-
-        print(colored("\n" + "기초과학".center(70) + "\n",
-                      attrs=['bold']))
-        for subclass in ["core_math1", "core_math2", "core_science",
-                         "core_experiment"]:
-            print_courses_by_subclass(subclass)
-
-        print_courses_by_class("freshman_seminar")
-        print_major_courses()
-
-        print_courses_by_class("research", 70)
-
-        print(colored("\n" + "자유선택 - 대학 공통과목".center(70) + "\n",
-                      attrs=['bold']))
-        for subclass in ["others1_core", "others1_optional"]:
-            print_courses_by_subclass(subclass)
-
-        print_courses_by_class("others2", 69)
-        print_courses_by_class("others3", 50)
-
-        print('\n' + colored(('=' * 31).center(75), "red", attrs=['bold']))
-        print(colored("||      Total Credits      ||".center(75), "red",
-                      attrs=['bold']))
-        print(
-            colored(("{:}{:^25}{:}".format("||", str(sum_credits()) + "/130", "||")).center(75), "red", attrs=['bold']))
-        print(colored(('=' * 31).center(75), "red", attrs=['bold']))
-        print()
-
-        print_courses_by_class("nonclassified_courses", length=63)
-        for mclass in ["music", "exercise", "colloquium"]:
-            print_courses_by_class(mclass)
-
-        print(my_classified_courses)
-        file = 'C:/projects/Completed course grade.xlsx'
 
         major_credit = 0
         for name in my_classified_course:
@@ -600,7 +438,7 @@ def upload_file(request):
 
             else:
                 rate = str(my_classified_courses_credit[name]) + "/" + str(classified_courses_credit[name])
-                print(rate)
+
                 try:
                     lst = list(my_classified_courses[name][0])
                     lst.append(rate)
@@ -609,9 +447,10 @@ def upload_file(request):
                     pass
         total = sum_credits()
 
-        context = {'upload_complete':1 ,'course_list': my_classified_courses, 'total': total,
+        context = {'upload_complete':1, 'course_list': my_classified_courses, 'total': total, 'course_max':classified_courses_credit,
                    'unclassfied_credit': my_classified_courses_credit["nonclassified_courses"]}
-
+        print(my_classified_courses_credit)
+        print(my_classified_courses)
         return render(request, 'pybo/result.html', context)
 
     return render(request, 'pybo/main_content.html')
@@ -723,8 +562,3 @@ def upload_start(request):
 
 def devs(request):
     return render(request, 'pybo/developer.html')
-
-def check_graduation(request, graduation_id):
-    graduation = get_object_or_404(Graduation, pk=graduation_id)
-    context = {'upload_complete': 1, 'course_list': graduation.my_classified_courses, 'total': graduation.sum_credits(), 'unclassfied_credit': graduation.my_classified_courses_credit["nonclassified_courses"]}
-    return render(request, 'pybo/result.html', context)

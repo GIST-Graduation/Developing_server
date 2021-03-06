@@ -2,7 +2,7 @@ $(document).ready(function () {
   $("#content1_title").click(function () {
     $(".content").removeClass("hide");
     $(".content").addClass("hide");
-    $("#service_explain").removeClass("hide");
+    $("#content1").removeClass("hide");
 
     $(".content_nav").removeClass("active");
     $("#content1_title").addClass("active");
@@ -11,7 +11,7 @@ $(document).ready(function () {
   $("#content2_title").click(function () {
     $(".content").removeClass("hide");
     $(".content").addClass("hide");
-    $("#how_to_use").removeClass("hide");
+    $("#content2").removeClass("hide");
 
     $(".content_nav").removeClass("active");
     $("#content2_title").addClass("active");
@@ -20,7 +20,7 @@ $(document).ready(function () {
   $("#content3_title").click(function () {
     $(".content").removeClass("hide");
     $(".content").addClass("hide");
-    $("#precautions").removeClass("hide");
+    $("#content3").removeClass("hide");
 
     $(".content_nav").removeClass("active");
     $("#content3_title").addClass("active");

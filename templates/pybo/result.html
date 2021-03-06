@@ -5,30 +5,38 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="{% static "header.css" %}">
 	<link rel="stylesheet" href="{% static "result.css" %}">
-	<link rel="stylesheet" href="./css/header.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<title>지졸!</title>
 </head>
 
 <body>
+    <div id="wrapper">
+      <div id="header">
+         <div id="top-bar">
+            <a href="start.html">
+               <div id="circles-container" class="flex-item">
+                  <div id="red" class="circle"></div>
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+                  <div class="circle"></div>
+               </div>
+            </a>
+            <div id="nav">
+               <div id="nav1" class="nav"><a href="main_content.html">Guide</a></div>
+               <div id="nav3" class="nav">Feedback</div>
+               <div id="nav4" class="nav"><a href="developer.html">Developers</a></div>
+            </div>
+         </div>
+      </div>
     {% if upload_complete %}
-        <table border=1>
-           <thead>
-              <tr>
-                 <th style="width: 200px; border: 1px solid #000000;">분류</th>
-                 <th style="width: 200px; border: 1px solid #000000;">과목코드</th>
-                 <th style="width: 200px; border: 1px solid #000000;">수강한 학점</th>
-                 <th style="width: 200px; border: 1px solid #000000;">과목명</th>
-                 <th style="width: 200px; border: 1px solid #000000;">이수 현황</th>
-              </tr>
-           </thead>
-        </table>
+        각 순서대로 분류, 과목코드, 수강한 학점, 과목명, 이수현황 입니다.
+        <p></p>
         {% for course,key in course_list.items %}
         <table border=1>
             <tbody><!-- 기본 한 개 -->
-                  <td style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ course }}</td>
+                  <th style="width: 200px; border: 1px solid #000000; " rowspan={{ key|length|add:"1" }}>{{ course }}</th>
             {% for value in key %}
                         <tr>
                               {% for w in value %}

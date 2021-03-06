@@ -45,7 +45,7 @@
 	<div id="wrapper">
 		<div id="header">
 			<div id="top-bar">
-				<a href="{% url 'pybo:upload_start' %}">
+				<a href="start.html">
 					<div id="circles-container" class="flex-item">
 						<div id="red" class="circle"></div>
 						<div class="circle"></div>
@@ -54,35 +54,106 @@
 					</div>
 				</a>
 				<div id="nav">
-					<div id="nav1" class="nav"><a href="#">Guide</a></div>
-					<div id="nav3" class="nav">Feedback</div>
-					<div id="nav4" class="nav"><a href="{% url 'pybo:developers' %}">Developers</a></div>
+					<a href="#" class="nav">
+						Guide
+					</a>
+					<a href="#" class="nav">
+						Feedback
+					</a>
+					<a href="{% url 'gist-graduation:developers' %}" class="nav">
+						Developers
+					</a>
 				</div>
 			</div>
 		</div>
 		<div id="container">
-			<div id="using_instruction">
+			<div id="using_instruction" class="bold">
 				<div class="content_nav active" id="content1_title">1</div>
 				<div class="content_nav" id="content2_title">2</div>
 				<div class="content_nav" id="content3_title">3</div>
 				<div class="content_nav" id="content4_title">Start!</div>
 			</div>
-			<div id="content">
-				<div id="content_cover">
-					<div id="service_explain" class="content">
-						1111</div>
-					<div id="how_to_use" class="content hide">2222</div>
-					<div id="precautions" class="content hide">3333</div>
+			<div class="content_box">
+				<div class="content_cover">
+					<div id="content1" class="content">
+						<div class="img_cover">
+							<img src="{% static "1.png" %}" alt="ZEUS에서 파일 다운로드하기" class="explain_img">
+						</div>
+						<div class="text">
+							<h3>1. ZEUS System에서 'Completed course grade.xlsx' 파일 다운로드하기</h3>
+							<p>
+								Step 1) GIST Portal System <a id="zeus" href="https://portal.gist.ac.kr/"
+									target="_blank">https://portal.gist.ac.kr/</a> 로그인하기
+							</p>
+							<p>
+								Step 2) 통합정보(ZEUS) 접속하기
+							</p>
+							<p>
+								Step 3) [성적] -> [개인성적조회] -> [Report card(KOR)] -> [엑셀 저장]
+							</p>
+						</div>
+					</div>
+					<div id="content2" class="content hide">
+						<div class="img_cover">
+							<img src="{% static "2.png" %}" alt="파일 변환하기" class="explain_img">
+							<img src="{% static "3.png" %}" alt="파일 변환하기" class="explain_img">
+						</div>
+						<div class="text">
+							<h3>
+								2. Excel에서 파일 확장자 바꾸기
+							</h3>
+							<p>
+								Step 1) 다운로드 받은 'Completed course grade.xls' 파일 Excel로 열기
+							</p>
+							<p>
+								Step 2) [편집 사용] 이후 [파일] -> [정보] -> [호환 모드] 클릭하여 확장자 '.xlsx'로 만들기
+							</p>
+						</div>
+					</div>
+					<div id="content3" class="content hide">
+						<div class="text">
+							<h3>주의 사항</h3>
+							<p>
+								※ 본 사이트는 GIST 대학 졸업에 필요한 요건들에 대한 사용자의 충족 현황을 보여줍니다.
+							</p>
+							<p>※ 본 사이트의 서비스는 사용자의 졸업을 책임지지 않습니다. 참조용으로 사용해주시면 감사하겠습니다.</p>
+							<p>
+								※ 재수강, 중복 수강이 불가능한 과목, 대학공통선택(사회봉사, 해외봉사, 창의함양)과목의 최대 1학점 인정 등에 대한 예외 처리를 하지 않았습니다. 엑셀 파일에서 해당 과목들을
+								지워주시거나 주의해서 사용해주시기 바랍니다.
+							</p>
+							<p>
+								※ 부전공, 복수전공 충족 현황은 보여주지 않습니다.
+							</p>
+							<p>
+								※ 소스코드나 개발 과정에 대한 질문이 있으시다면 Developers 페이지의 메일이나 카톡으로 연락주시면 답변드리겠습니다.
+							</p>
+						</div>
+					</div>
 					<div id="start" class="content hide">
-                        <form method="post" enctype="multipart/form-data">
-            <div class="file-droppable">
-                <div>Drag-n-drop some file here</div>
-                <span>&times;</span>
-                {% csrf_token %}
-                <input type="file" name="document" id="file_enter">
-            </div>
-        <button type="submit">Upload</button>
-        </form></div>
+						<div id="start_cover">
+                            <form method="post" enctype="multipart/form-data">
+                                <div class="file-droppable">
+                                    <div>Drag-n-drop some file here</div>
+                                    <span>&times;</span>
+                                    {% csrf_token %}
+                                    <div id="major_box" class="start">
+									<select name="major" id="major">
+										<option value="GS">기초교육학부</option>
+										<option value="BS">생명과학전공</option>
+										<option value="CH">화학전공</option>
+										<option value="EC">전기전자컴퓨터전공</option>
+										<option value="EV">지구환경공학전공</option>
+										<option value="MA">신소재공학전공</option>
+										<option value="MC">기계공학전공</option>
+										<option value="PS">물리전공</option>
+									</select>
+                                    </div>
+                                    <input type="file" name="document" id="file_enter">
+                                </div>
+                                <button type="submit">Upload</button>
+                            </form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

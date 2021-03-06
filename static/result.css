@@ -1,20 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 
 body {
-  min-width: 700px;
+  overflow-x: hidden;
 }
 
 #wrapper {
   width: 100vw;
   height: 100vh;
+  min-width: 80vw;
+  min-height: 80vh;
 }
 
 #container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   margin: 15px;
-  height: 70%;
+  height: auto;
 }
 
 #table_cover {
@@ -22,16 +23,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .table {
   width: 70%;
   height: 150px;
   border: 1px solid black;
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
-  border-right: none;
+  border-radius: 20px;
   border-spacing: 0;
   text-align: center;
   margin: 10px 0;
@@ -60,11 +60,14 @@ td {
   color: white;
   text-align: center;
   margin: auto;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 50px;
   border-radius: 15px;
+  display: flex;
 }
-
-a {
+.btn_feedback div {
+  margin: auto;
+  font-size: 1.25rem;
+  font-weight: bold;
   color: white;
 }
